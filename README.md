@@ -98,8 +98,8 @@ keyword arguments that match the long option name.
 
 Briefly put, you could:
 
-    import ldap2nfc
-    ndefobj = ldap2nfc.lookup ('john.doe@example.com', 'jane.doe@example.net')
+    import ldap2ndef
+    ndefobj = ldap2ndef.lookup ('john.doe@example.com', 'jane.doe@example.net')
 
 
 ## Global Directory

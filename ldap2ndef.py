@@ -123,7 +123,7 @@ def _records (vcard, coords, first=True, last=True):
 # Main API routine
 #
 
-def lookup (nais):
+def lookup (*nais):
 	"""Given any number of NAIs, lookup their data and format as a vCard;
 	   combine entries in an NDEF file.
 	"""
@@ -162,7 +162,7 @@ if __name__ == '__main__':
 		sys.stderr.write ('       There are no options at this time\n')
 		sys.stderr.write ('       Output will be written to "output.ndef"\n')
 		sys.exit (1)
-	ndef = lookup (args)
+	ndef = lookup (*args)
 	outfile = open ('output.ndef', 'w')
 	outfile.write (ndef)
 	outfile.close ()
