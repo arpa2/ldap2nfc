@@ -39,11 +39,14 @@ wants to control it as a payment instrument; if you think this is bad,
 then you may want to let them know that this is why your next phone will
 be Android.
 
-This is done with the following command:
+Creating the content for your business card is done with:
 
     ldap2ndef.py john.doe@example.com
 
-This assumes an LDAP server for `example.com`, found DNS SRV records like
+The output will be written to the file `output.ndef`, ready for your
+favourite NFC Reader/Writer to pass it on.
+
+This assumes an LDAP server for `example.com`, announced in DNS SRV records like
 
     _ldap._tcp  IN SRV  389 10 10  ldap.example.com.
 
@@ -87,9 +90,9 @@ form; and writes it back as an update inasfar as vCards have changed.
 
 ## Programming API
 
-The script can run as a main program, or as a library.  See the main
-program for the rather trivial mapping; essentially, the invocations
-given above can be turned into a function call to `ldap2vcard2ndef.lookup()`
+The `ldap2ndef` script can run as a main program, or as a library.  See the
+main program for the rather trivial mapping; essentially, the invocations
+given above can be turned into a function call to `ldap2ndef.lookup()`
 with the same parameters.
 
 Future versions may include options, the defaults of which will match
@@ -120,6 +123,12 @@ address.  The other usecase, namely to pull your own contact information
 to a business card, might require more openness and therefore need you to
 login.  That is not currently implemented, since this is merely intended
 for demonstration purposes right now.
+
+There is a lot of potential in this distributed, locally controlled form
+of data, especially because both the protocol and data types are rather
+well standardised, and yet they are easily extensible!  To read more about
+the potential of a Global Directory, proceed to our
+[technical exploration](http://rickywiki.vanrein.org/doku.php?id=globaldir).
 
 
 ## IdentityHub
