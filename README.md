@@ -1,6 +1,6 @@
 # Making LDAP information available over NFC
 
-> *Download contact information from their primary online location, and
+> *Download contact information from your contacts' LDAP database, and
 > map them via vCard fomat to NDEF.  NDEF is the NFC payload.  NDEF can be
 > flashed onto electronic business cards, or downloaded into smart phones.*
 
@@ -41,7 +41,7 @@ be Android.
 
 This is done with the following command:
 
-    ldap2vcard2ndef.py john.doe@example.com
+    ldap2ndef.py john.doe@example.com
 
 This assumes an LDAP server for `example.com`, found DNS SRV records like
 
@@ -53,7 +53,7 @@ and after connecting anonymously, this makes a search under
 
 with the object filter
 
-   (&(objectClass=person)(uid=john.doe))
+    (&(objectClass=person)(uid=john.doe))
 
 and if it finds exactly one, it will map LDAP attributes to their vCard form,
 which is then packed into an NDEF file.  You can use your favourite NFC tools
@@ -95,6 +95,42 @@ with the same parameters.
 Future versions may include options, the defaults of which will match
 with the expected behaviour.  Presentation of options will map to
 keyword arguments that match the long option name.
+
+Briefly put, you could:
+
+    import ldap2nfc
+    ndefobj = ldap2nfc.lookup ('john.doe@example.com', 'jane.doe@example.net')
+
+
+## Global Directory
+
+This code assumes the LDAP global directory, which is nothing more than a
+definition of a DNS SRV record for LDAP under participating domain names:
+
+    _ldap._tcp.example.com.  IN SRV  389 10 10  ldap.example.com.
+
+The information published here can be public (meaning, available after
+binding anonymously) or it can be private (meaning, it requires actual
+login during the binding phase).  It is normal for LDAP servers to provide
+a variety of choices when it comes to visibility of objects and attributes.
+
+The `ldap2nfc` utility currently extracts public information, which covers
+the usecase of pulling information for a contact based on their email
+address.  The other usecase, namely to pull your own contact information
+to a business card, might require more openness and therefore need you to
+login.  That is not currently implemented, since this is merely intended
+for demonstration purposes right now.
+
+
+## IdentityHub
+
+This project is an early demonstration of the Identity Hub, or second phase
+of the InternetWide.org project, which aims to improve decentralisation
+and self-control of online presence by putting up an architecture into which
+we can hang the plethora of individual open source projects that are now
+being created.
+
+[Read more about the project](http://internetwide.org/blog/2016/06/24/iwo-phases.html)
 
 
 ## Requirements
