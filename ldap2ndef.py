@@ -115,8 +115,7 @@ def _records (vcard, coords, first=True, last=True):
 	for (url,base,filter) in coords:
 		payloads.append ( ndef.Record (type='urn:nfc:wkt:U', data=url) )
 	#TODO# Encode first, last... how?
-	retval = b''.join (ndef.message_encoder (payloads))
-	return retval
+	return payloads
 
 
 #
@@ -128,6 +127,7 @@ def lookup (*nais):
 	   combine entries in an NDEF file.
 	"""
 	retval = ''
+	records = []
 	todo = len (nais)
 	for i in range (todo):
 		(first,last) = (i==0, i+1==todo)
@@ -143,7 +143,8 @@ def lookup (*nais):
 		if not found:
 			raise Exception ('All LDAP servers for ' + nais [i] + ' failed')
 		vcard = _format (coords, **attrs)
-		retval = retval + _records (vcard, coords, first, last)
+		records = records + _records (vcard, coords, first, last)
+		retval = b''.join (ndef.message_encoder (records))
 	return retval
 
 
